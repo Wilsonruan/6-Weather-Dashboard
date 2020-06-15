@@ -1,5 +1,5 @@
-var provincial = [];
+var provincial = ["Austin", "Chicago", "New York", "Orlando", "San Francisco", "Seattle", "Denver", "Atlanta"];
 
 for (var i = 0; i < 8; i++) {
-    $('ul').append('<li><a class="" href="#' + '">' + '</a></li>');
+    $('aside').append('<button class="btn btn-light border border-secondary" href="#' + provincial[i] + '">' + provincial[i] + '</button>');
 }
