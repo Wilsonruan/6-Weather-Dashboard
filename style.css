@@ -10,8 +10,22 @@ aside {
     flex-direction: column;
     background-color: whitesmoke;
     padding: 10px;
+    margin-right: 15px;
+    margin-bottom: 150px;
 }
 
 button {
     border: black;
+}
+
+.jumbotron {
+    max-width: 800px;
+    max-height: 500px;
+    margin-right: 10px;
+}
+
+.blueBox {
+    max-width: 150px;
+    max-height: 80px;
+    background-color: blue;
 }
