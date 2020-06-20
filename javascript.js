@@ -23,5 +23,8 @@ $('article').append('<div class="blueBox container jumbotron"> </div>')
 }
 
 $('#button').click(function () {
-  console.log("It works")
+  var newCity = $('input').val();
+  yorkRegion.unshift(newCity);
+  yorkRegion.pop();
+  console.log(yorkRegion)
 })
