@@ -4,22 +4,13 @@ if (yorkRegion === null) {
   yorkRegion = ["", "", "", "", "", "", "", "", ""];
 }
 
-// var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + yorkRegion[0] + ",ca&appid=02c767f928e7e5ad4f0e01b6982bd3e6"
-
-// $.ajax({
-//     url: queryURL,
-//     method: "GET"
-//   }).then(function(response) {
-//     console.log(response);
-//   });
-
 for (var i = 0; i < 5; i++) {
   $('article').append('<div class="blueBox container jumbotron"> </div>')
 }
 
-showHistory()
+searchHistory()
 
-function showHistory() {
+function searchHistory() {
 $('aside').append('<p>Search for a City</p>')
 $('aside').append('<div id="search-city" class="input-group mb-3"></div>')
 $('#search-city').append('<input type="text" class="form-control" aria-describedby="button-addon2">')
@@ -30,13 +21,39 @@ $('#button').append('<button class="btn btn-primary" type="button" id="button-ad
   }
   $('#button').click(function () {
     var newCity = $('input').val();
+    currentConditions(newCity);
+    fiveDayForecast(newCity);
     yorkRegion.unshift(newCity);
     yorkRegion.pop();
     var JSONReadyUsers = JSON.stringify(yorkRegion);
     localStorage.setItem("yorkRegion", JSONReadyUsers);
     console.log(yorkRegion)
+  
     $('aside').empty()
-    showHistory()
+    searchHistory()
   })
+}
+
+function currentConditions(newCity) {
+  var queryURLWeather = "https://api.openweathermap.org/data/2.5/weather?q=" + newCity + "&units=metric,ca&appid=02c767f928e7e5ad4f0e01b6982bd3e6"
+
+$.ajax({
+    url: queryURLWeather,
+    method: "GET"
+  }).then(function(response) {
+    console.log(response);
+  });
+
+}
+
+function fiveDayForecast(newCity) {
+  var queryURLForecast = "https://api.openweathermap.org/data/2.5/forecast?q=" + newCity + "&units=metric,ca&appid=02c767f928e7e5ad4f0e01b6982bd3e6"
+
+  $.ajax({
+    url: queryURLForecast,
+    method: "GET"
+  }).then(function(response) {
+    console.log(response);
+  });
 }
 
