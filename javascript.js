@@ -14,9 +14,14 @@ $('aside').append('<div id="search-city" class="input-group mb-3"></div>')
 $('#search-city').append('<input type="text" class="form-control" aria-describedby="button-addon2">')
 $('#search-city').append('<div id="button" class="input-group-append"></div>')
 $('#button').append('<button class="btn btn-primary" type="button" id="button-addon2">Button</button>');
+
 for (var i = 0; i < yorkRegion.length; i++) {
     $('aside').append('<button class="btn btn-light border border-secondary" href="#' + yorkRegion[i] + '">' + yorkRegion[i] + '</button>');
 }
 for (var i = 0; i < 5; i++) {
 $('article').append('<div class="blueBox container jumbotron"> </div>')
 }
+
+$('#button').click(function () {
+  console.log("It works")
+})
