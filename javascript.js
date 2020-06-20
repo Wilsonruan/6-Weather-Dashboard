@@ -23,31 +23,35 @@ $('#button').append('<button class="btn btn-primary" type="button" id="button-ad
     var newCity = $('input').val();
     currentConditions(newCity);
     fiveDayForecast(newCity);
-    yorkRegion.unshift(newCity);
-    yorkRegion.pop();
-    var JSONReadyUsers = JSON.stringify(yorkRegion);
-    localStorage.setItem("yorkRegion", JSONReadyUsers);
-    console.log(yorkRegion)
-  
-    $('aside').empty()
-    searchHistory()
   })
 }
 
 function currentConditions(newCity) {
-  var queryURLWeather = "https://api.openweathermap.org/data/2.5/weather?q=" + newCity + "&units=metric,ca&appid=02c767f928e7e5ad4f0e01b6982bd3e6"
+  var queryURLWeather = "https://api.openweathermap.org/data/2.5/weather?q=" + newCity + ",ca&units=metric&appid=02c767f928e7e5ad4f0e01b6982bd3e6"
 
 $.ajax({
     url: queryURLWeather,
     method: "GET"
   }).then(function(response) {
-    console.log(response);
-  });
+    console.log(response['main']['temp']);
+
+    yorkRegion.unshift(newCity);
+    yorkRegion.pop();
+    var JSONReadyUsers = JSON.stringify(yorkRegion);
+    localStorage.setItem("yorkRegion", JSONReadyUsers);
+    $('aside').empty()
+    searchHistory()
+    var mainTemp = response['main']['temp'];
+
+    $('#current-weather').append('<p>' + newCity + '</p>');
+    $('#current-weather').append('<p>' + mainTemp.toFixed(2) + '°C</p>');
+
+  }).catch(err => alert("Wrong city name!"));;
 
 }
 
 function fiveDayForecast(newCity) {
-  var queryURLForecast = "https://api.openweathermap.org/data/2.5/forecast?q=" + newCity + "&units=metric,ca&appid=02c767f928e7e5ad4f0e01b6982bd3e6"
+  var queryURLForecast = "https://api.openweathermap.org/data/2.5/forecast?q=" + newCity + ",ca&units=metric&appid=02c767f928e7e5ad4f0e01b6982bd3e6"
 
   $.ajax({
     url: queryURLForecast,
