@@ -1,4 +1,5 @@
 var yorkRegion = JSON.parse(localStorage.getItem("yorkRegion"));
+var firstTime = false;
 
 if (yorkRegion === null) {
   yorkRegion = ["", "", "", "", "", "", "", "", ""];
@@ -9,7 +10,7 @@ for (var i = 0; i < 5; i++) {
 }
 
 searchHistory()
-// currentConditions(yorkRegion[0]);
+currentConditions(yorkRegion[0]);
 
 function searchHistory() {
 $('aside').append('<p>Search for a City</p>')
@@ -36,10 +37,13 @@ $.ajax({
   }).then(function(response) {
     console.log(response['main']['temp']);
 
-    yorkRegion.unshift(newCity);
-    yorkRegion.pop();
-    var JSONReadyUsers = JSON.stringify(yorkRegion);
-    localStorage.setItem("yorkRegion", JSONReadyUsers);
+    if (firstTime) {
+      yorkRegion.unshift(newCity);
+      yorkRegion.pop();
+      var JSONReadyUsers = JSON.stringify(yorkRegion);
+      localStorage.setItem("yorkRegion", JSONReadyUsers);
+    }
+    firstTime = true;
     $('aside, #current-weather').empty()
     searchHistory()
     var mainTemp = response['main']['temp'];
@@ -54,7 +58,6 @@ $.ajax({
     $('#current-weather').append('<p> Wind Speed: ' + windSpeed + ' MPH</p>');
 
   }).catch(err => alert("Wrong city name!"));;
-
 }
 
 function fiveDayForecast(newCity) {
