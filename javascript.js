@@ -31,7 +31,7 @@ $('#button').append('<button class="btn btn-primary" type="button" id="button-ad
 
 function currentConditions(newCity) {
   var queryURLWeather = "https://api.openweathermap.org/data/2.5/weather?q=" + newCity + ",ca&units=metric&appid=02c767f928e7e5ad4f0e01b6982bd3e6"
-
+  var cityName = newCity;
 $.ajax({
     url: queryURLWeather,
     method: "GET"
@@ -39,9 +39,9 @@ $.ajax({
     console.log(response['main']['temp']);
 
     if (firstTime) {
-      var cityName = response['name'];
+      cityName = response['name'];
       console.log(cityName)
-      yorkRegion.unshift(newCity);
+      yorkRegion.unshift(cityName);
       yorkRegion.pop();
       var JSONReadyUsers = JSON.stringify(yorkRegion);
       localStorage.setItem("yorkRegion", JSONReadyUsers);
@@ -54,7 +54,7 @@ $.ajax({
     var weatherIcon = response['weather'][0]['icon'];
     var windSpeed = response['wind']['speed']
 
-    $('#current-weather').append('<h1 id="icon-here">' + newCity + " (" + (moment().format('MMMM Do, YYYY')) + ')</h1>');
+    $('#current-weather').append('<h1 id="icon-here">' + cityName + " (" + (moment().format('MMMM Do, YYYY')) + ')</h1>');
     $('#icon-here').append('<img src="http://openweathermap.org/img/w/' + weatherIcon + '.png" alt="weather icon">');
     $('#current-weather').append('<p> Temperature: ' + mainTemp + '°C</p>');
     $('#current-weather').append('<p> Humidity: ' + mainHumi + '%</p>');
