@@ -27,5 +27,6 @@ button {
 .blueBox {
     max-width: 150px;
     max-height: 80px;
-    background-color: blue;
+    background-color: #0066ff;
+    color: white;
 }
