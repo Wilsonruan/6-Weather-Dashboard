@@ -5,9 +5,9 @@ if (yorkRegion === null) {
   yorkRegion = ["", "", "", "", "", "", "", "", ""];
 }
 
-for (var i = 0; i < 5; i++) {
-  $('article').append('<div id="blue-' + i + '" class="blueBox"> </div>')
-}
+// for (var i = 0; i < 5; i++) {
+//   $('article').append('<div id="blue-' + i + '" class="blueBox"> </div>')
+// }
 
 searchHistory()
 currentConditions(yorkRegion[0]);
@@ -39,6 +39,8 @@ $.ajax({
     console.log(response['main']['temp']);
 
     if (firstTime) {
+      var cityName = response['name'];
+      console.log(cityName)
       yorkRegion.unshift(newCity);
       yorkRegion.pop();
       var JSONReadyUsers = JSON.stringify(yorkRegion);
@@ -68,6 +70,10 @@ function fiveDayForecast(newCity) {
     url: queryURLForecast,
     method: "GET"
   }).then(function(response) {
+    
+    for (var i = 0; i < 5; i++) {
+      $('article').append('<div id="blue-' + i + '" class="blueBox"> </div>')
+    }
 
     for (var i = 0; i < 5; i ++) {
       var weatherIcon = response['list'][i * 8]['weather'][0]['icon'];
