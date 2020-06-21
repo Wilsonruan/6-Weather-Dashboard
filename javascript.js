@@ -5,10 +5,6 @@ if (yorkRegion === null) {
   yorkRegion = ["", "", "", "", "", "", "", "", ""];
 }
 
-// for (var i = 0; i < 5; i++) {
-//   $('article').append('<div id="blue-' + i + '" class="blueBox"> </div>')
-// }
-
 searchHistory()
 currentConditions(yorkRegion[0]);
 fiveDayForecast(yorkRegion[0]);
@@ -52,13 +48,25 @@ $.ajax({
     var mainTemp = response['main']['temp'];
     var mainHumi = response['main']['humidity'];
     var weatherIcon = response['weather'][0]['icon'];
-    var windSpeed = response['wind']['speed']
-
+    var windSpeed = response['wind']['speed'];
+    var longAtt = response['coord']['lon'];
+    var latAtt = response['coord']['lat'];
+    
     $('#current-weather').append('<h1 id="icon-here">' + cityName + " (" + (moment().format('MMMM Do, YYYY')) + ')</h1>');
     $('#icon-here').append('<img src="http://openweathermap.org/img/w/' + weatherIcon + '.png" alt="weather icon">');
     $('#current-weather').append('<p> Temperature: ' + mainTemp + '°C</p>');
     $('#current-weather').append('<p> Humidity: ' + mainHumi + '%</p>');
     $('#current-weather').append('<p> Wind Speed: ' + windSpeed + ' MPH</p>');
+
+    var UVURLWeather = "http://api.openweathermap.org/data/2.5/uvi?appid=02c767f928e7e5ad4f0e01b6982bd3e6&lat=" + latAtt + "&lon=" + longAtt
+    
+    $.ajax({
+      url: UVURLWeather,
+      method: "GET"
+    }).then(function(getUV) {
+        var uvIndex = getUV['value']
+        $('#current-weather').append('<p> UV Index: <mark>' + uvIndex + '</mark></p>');
+    })
 
   }).catch(err => alert("Wrong city name!"));;
 }
