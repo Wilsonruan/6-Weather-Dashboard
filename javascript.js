@@ -9,6 +9,7 @@ for (var i = 0; i < 5; i++) {
 }
 
 searchHistory()
+// currentConditions(yorkRegion[0]);
 
 function searchHistory() {
 $('aside').append('<p>Search for a City</p>')
@@ -39,12 +40,18 @@ $.ajax({
     yorkRegion.pop();
     var JSONReadyUsers = JSON.stringify(yorkRegion);
     localStorage.setItem("yorkRegion", JSONReadyUsers);
-    $('aside').empty()
+    $('aside, #current-weather').empty()
     searchHistory()
     var mainTemp = response['main']['temp'];
+    var mainHumi = response['main']['humidity'];
+    var weatherIcon = response['weather'][0]['icon'];
+    var windSpeed = response['wind']['speed']
 
-    $('#current-weather').append('<p>' + newCity + '</p>');
-    $('#current-weather').append('<p>' + mainTemp.toFixed(2) + '°C</p>');
+    $('#current-weather').append('<p id="icon-here">' + newCity + " (" + (moment().format('MMMM Do, YYYY')) + ')</p>');
+    $('#icon-here').append('<img src="http://openweathermap.org/img/w/' + weatherIcon + '.png" alt="weather icon">');
+    $('#current-weather').append('<p> Temperature: ' + mainTemp + '°C</p>');
+    $('#current-weather').append('<p> Humidity: ' + mainHumi + '%</p>');
+    $('#current-weather').append('<p> Wind Speed: ' + windSpeed + ' MPH</p>');
 
   }).catch(err => alert("Wrong city name!"));;
 
