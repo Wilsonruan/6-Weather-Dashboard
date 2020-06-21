@@ -6,11 +6,12 @@ if (yorkRegion === null) {
 }
 
 for (var i = 0; i < 5; i++) {
-  $('article').append('<div class="blueBox container jumbotron"> </div>')
+  $('article').append('<div id="blue-' + i + '" class="blueBox"> </div>')
 }
 
 searchHistory()
 currentConditions(yorkRegion[0]);
+fiveDayForecast(yorkRegion[0]);
 
 function searchHistory() {
 $('aside').append('<p>Search for a City</p>')
@@ -51,7 +52,7 @@ $.ajax({
     var weatherIcon = response['weather'][0]['icon'];
     var windSpeed = response['wind']['speed']
 
-    $('#current-weather').append('<p id="icon-here">' + newCity + " (" + (moment().format('MMMM Do, YYYY')) + ')</p>');
+    $('#current-weather').append('<h1 id="icon-here">' + newCity + " (" + (moment().format('MMMM Do, YYYY')) + ')</h1>');
     $('#icon-here').append('<img src="http://openweathermap.org/img/w/' + weatherIcon + '.png" alt="weather icon">');
     $('#current-weather').append('<p> Temperature: ' + mainTemp + '°C</p>');
     $('#current-weather').append('<p> Humidity: ' + mainHumi + '%</p>');
@@ -67,7 +68,14 @@ function fiveDayForecast(newCity) {
     url: queryURLForecast,
     method: "GET"
   }).then(function(response) {
-    console.log(response);
+
+    for (var i = 0; i < 5; i ++) {
+      var weatherIcon = response['list'][i * 8]['weather'][0]['icon'];
+      $('#blue-' + i).append('<p>' + (moment().add( i + 1, 'days').format('MMMM Do, YYYY')) + '</p>')
+      $('#blue-' + i).append('<img src="http://openweathermap.org/img/w/' + weatherIcon + '.png" alt="weather icon">');
+      $('#blue-' + i).append('<p>Temp: ' + response['list'][i * 8]['main']['temp'] + '°C</p>')
+      $('#blue-' + i).append('<p>Humidity: ' + response['list'][i * 8]['main']['humidity'] + '%</p>')
+    }
   });
 }
 
