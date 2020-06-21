@@ -47,7 +47,7 @@ $.ajax({
       localStorage.setItem("yorkRegion", JSONReadyUsers);
     }
     firstTime = true;
-    $('aside, #current-weather').empty()
+    $('aside, #current-weather, #forecast').empty()
     searchHistory()
     var mainTemp = response['main']['temp'];
     var mainHumi = response['main']['humidity'];
@@ -70,7 +70,7 @@ function fiveDayForecast(newCity) {
     url: queryURLForecast,
     method: "GET"
   }).then(function(response) {
-    
+
     for (var i = 0; i < 5; i++) {
       $('article').append('<div id="blue-' + i + '" class="blueBox"> </div>')
     }
