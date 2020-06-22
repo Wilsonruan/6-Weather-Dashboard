@@ -2,7 +2,7 @@ var yorkRegion = JSON.parse(localStorage.getItem("yorkRegion"));
 var firstTime = false;
 
 if (yorkRegion === null) {
-  yorkRegion = ["", "", "", "", "", "", "", "", ""];
+  yorkRegion = ["Toronto", "Markham", "Scarborough", "Richmond Hill", "Newmarket", "North York", "Vaughan", "Barrie", "Ottawa"];
 }
 
 searchHistory()
@@ -38,7 +38,7 @@ $.ajax({
     method: "GET"
   }).then(function(response) {
     newCity = newCity.trim().toLowerCase()
-    newCity = newCity.charAt(0).toUpperCase() + newCity.slice(1)
+    newCity = newCity.replace(/(^\w{1})|(\s{1}\w{1})/g, match => match.toUpperCase());
     for (var i = 0; i < yorkRegion.length; i++) {
       if (yorkRegion[i] == newCity) {
         yorkRegion.unshift(newCity);
