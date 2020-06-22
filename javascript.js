@@ -79,7 +79,7 @@ $.ajax({
         $('#current-weather').append('<p> UV Index: <mark>' + uvIndex + '</mark></p>');
     })
 
-  }).catch(err => alert("Wrong city name!"));;
+  }).catch(err => alert("Please enter a correct city name in Canada"));;
 }
 
 function fiveDayForecast(newCity) {
