@@ -7,7 +7,6 @@ if (yorkRegion === null) {
 
 myFunction()
 currentConditions(yorkRegion[0]);
-fiveDayForecast(yorkRegion[0]);
 
 function myFunction() {
 $('aside').append('<p>Search for a City</p>')
@@ -22,12 +21,10 @@ $('aside').append('<div id="list" class="d-flex flex-column"> </div>')
   $('#button').click(function () {
     var newCity = $('input').val();
     currentConditions(newCity);
-    fiveDayForecast(newCity);
   })
   $('.btn-light').click(function () {
     var newCity = $(this).val();
     currentConditions(newCity);
-    fiveDayForecast(newCity);
   })
 }
 
@@ -40,6 +37,7 @@ $.ajax({
     newCity = newCity.trim().toLowerCase()
     newCity = newCity.replace(/(^\w{1})|(\s{1}\w{1})/g, match => match.toUpperCase());
     searchHistory(newCity);
+    fiveDayForecast(newCity);
     myFunction();
     var mainTemp = response['main']['temp'];
     var mainHumi = response['main']['humidity'];
@@ -55,7 +53,7 @@ $.ajax({
     $('#current-weather').append('<p> Wind Speed: ' + windSpeed + ' MPH</p>');
 
     uvIndex(longAtt, latAtt)
-    
+
   }).catch(err => alert("Please enter a correct city name in Canada"));;
 }
 
