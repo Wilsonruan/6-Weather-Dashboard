@@ -15,11 +15,17 @@ $('aside').append('<div id="search-city" class="input-group mb-3"></div>')
 $('#search-city').append('<input type="text" class="form-control" aria-describedby="button-addon2">')
 $('#search-city').append('<div id="button" class="input-group-append"></div>')
 $('#button').append('<button class="btn btn-primary" type="button" id="button-addon2">Button</button>');
+$('aside').append('<div id="list" class="d-flex flex-column"> </div>')
   for (var i = 0; i < yorkRegion.length; i++) {
-    $('aside').append('<button id="list" class="btn btn-light border border-secondary" href="#' + yorkRegion[i] + '">' + yorkRegion[i] + '</button>');
+    $('#list').append('<button class="btn btn-light border border-secondary" value="' + yorkRegion[i] + '">' + yorkRegion[i] + '</button>');
   }
   $('#button').click(function () {
     var newCity = $('input').val();
+    currentConditions(newCity);
+    fiveDayForecast(newCity);
+  })
+  $('.btn-light').click(function () {
+    var newCity = $(this).val();
     currentConditions(newCity);
     fiveDayForecast(newCity);
   })
