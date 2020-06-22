@@ -34,6 +34,14 @@ $.ajax({
   }).then(function(response) {
     console.log(response['main']['temp']);
 
+    for (var i = 0; i < yorkRegion.length; i++) {
+      if (yorkRegion[i] === newCity) {
+        yorkRegion.unshift(cityName);
+        yorkRegion.splice( i + 1 , 1 )
+        firstTime = false;
+      }
+    }
+
     if (firstTime) {
       cityName = response['name'];
       console.log(cityName)
