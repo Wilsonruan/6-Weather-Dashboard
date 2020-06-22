@@ -32,12 +32,10 @@ button {
     color: white;
     margin-right: 10px;
     padding: 10px;
-    border-radius: 5px;
 }
 
 mark {
     background-color: red;
     color: white;
-    border-radius: 5px;
     padding: 2px;
 }
