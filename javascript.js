@@ -5,11 +5,11 @@ if (yorkRegion === null) {
   yorkRegion = ["Toronto", "Markham", "Scarborough", "Richmond Hill", "Newmarket", "North York", "Vaughan", "Barrie", "Ottawa"];
 }
 
-searchHistory()
+myFunction()
 currentConditions(yorkRegion[0]);
 fiveDayForecast(yorkRegion[0]);
 
-function searchHistory() {
+function myFunction() {
 $('aside').append('<p>Search for a City</p>')
 $('aside').append('<div id="search-city" class="input-group mb-3"></div>')
 $('#search-city').append('<input type="text" class="form-control" aria-describedby="button-addon2">')
@@ -39,23 +39,8 @@ $.ajax({
   }).then(function(response) {
     newCity = newCity.trim().toLowerCase()
     newCity = newCity.replace(/(^\w{1})|(\s{1}\w{1})/g, match => match.toUpperCase());
-    for (var i = 0; i < yorkRegion.length; i++) {
-      if (yorkRegion[i] == newCity) {
-        yorkRegion.unshift(newCity);
-        yorkRegion.splice( i + 1 , 1 )
-        firstTime = false;
-      }
-    }
-
-    if (firstTime) {
-      yorkRegion.unshift(newCity);
-      yorkRegion.pop();
-      var JSONReadyUsers = JSON.stringify(yorkRegion);
-      localStorage.setItem("yorkRegion", JSONReadyUsers);
-    }
-    firstTime = true;
-    $('aside, #current-weather, #forecast').empty()
-    searchHistory()
+    searchHistory(newCity);
+    myFunction();
     var mainTemp = response['main']['temp'];
     var mainHumi = response['main']['humidity'];
     var weatherIcon = response['weather'][0]['icon'];
@@ -69,17 +54,21 @@ $.ajax({
     $('#current-weather').append('<p> Humidity: ' + mainHumi + '%</p>');
     $('#current-weather').append('<p> Wind Speed: ' + windSpeed + ' MPH</p>');
 
-    var UVURLWeather = "http://api.openweathermap.org/data/2.5/uvi?appid=02c767f928e7e5ad4f0e01b6982bd3e6&lat=" + latAtt + "&lon=" + longAtt
+    uvIndex(longAtt, latAtt)
     
-    $.ajax({
-      url: UVURLWeather,
-      method: "GET"
-    }).then(function(getUV) {
-        var uvIndex = getUV['value']
-        $('#current-weather').append('<p> UV Index: <mark>' + uvIndex + '</mark></p>');
-    })
-
   }).catch(err => alert("Please enter a correct city name in Canada"));;
+}
+
+function uvIndex (longAtt, latAtt) {
+  var UVURLWeather = "http://api.openweathermap.org/data/2.5/uvi?appid=02c767f928e7e5ad4f0e01b6982bd3e6&lat=" + latAtt + "&lon=" + longAtt
+    
+  $.ajax({
+    url: UVURLWeather,
+    method: "GET"
+  }).then(function(getUV) {
+      var uvIndex = getUV['value']
+      $('#current-weather').append('<p> UV Index: <mark>' + uvIndex + '</mark></p>');
+  })
 }
 
 function fiveDayForecast(newCity) {
@@ -102,5 +91,24 @@ function fiveDayForecast(newCity) {
       $('#blue-' + i).append('<p>Humidity: ' + response['list'][i * 8]['main']['humidity'] + '%</p>')
     }
   });
+}
+
+function searchHistory (newCity) {
+  for (var i = 0; i < yorkRegion.length; i++) {
+    if (yorkRegion[i] == newCity) {
+      yorkRegion.unshift(newCity);
+      yorkRegion.splice( i + 1 , 1 )
+      firstTime = false;
+    }
+  }
+
+  if (firstTime) {
+    yorkRegion.unshift(newCity);
+    yorkRegion.pop();
+    var JSONReadyUsers = JSON.stringify(yorkRegion);
+    localStorage.setItem("yorkRegion", JSONReadyUsers);
+  }
+  firstTime = true;
+  $('aside, #current-weather, #forecast').empty()
 }
 
