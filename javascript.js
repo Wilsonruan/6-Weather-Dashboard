@@ -33,25 +33,22 @@ $('aside').append('<div id="list" class="d-flex flex-column"> </div>')
 
 function currentConditions(newCity) {
   var queryURLWeather = "https://api.openweathermap.org/data/2.5/weather?q=" + newCity + ",ca&units=metric&appid=02c767f928e7e5ad4f0e01b6982bd3e6"
-  var cityName = newCity;
 $.ajax({
     url: queryURLWeather,
     method: "GET"
   }).then(function(response) {
-    console.log(response['main']['temp']);
-
+    newCity = newCity.trim().toLowerCase()
+    newCity = newCity.charAt(0).toUpperCase() + newCity.slice(1)
     for (var i = 0; i < yorkRegion.length; i++) {
-      if (yorkRegion[i] === newCity) {
-        yorkRegion.unshift(cityName);
+      if (yorkRegion[i] == newCity) {
+        yorkRegion.unshift(newCity);
         yorkRegion.splice( i + 1 , 1 )
         firstTime = false;
       }
     }
 
     if (firstTime) {
-      cityName = response['name'];
-      console.log(cityName)
-      yorkRegion.unshift(cityName);
+      yorkRegion.unshift(newCity);
       yorkRegion.pop();
       var JSONReadyUsers = JSON.stringify(yorkRegion);
       localStorage.setItem("yorkRegion", JSONReadyUsers);
@@ -66,7 +63,7 @@ $.ajax({
     var longAtt = response['coord']['lon'];
     var latAtt = response['coord']['lat'];
     
-    $('#current-weather').append('<h1 id="icon-here">' + cityName + " (" + (moment().format('MMMM Do, YYYY')) + ')</h1>');
+    $('#current-weather').append('<h1 id="icon-here">' + newCity + " (" + (moment().format('MMMM Do, YYYY')) + ')</h1>');
     $('#icon-here').append('<img src="http://openweathermap.org/img/w/' + weatherIcon + '.png" alt="weather icon">');
     $('#current-weather').append('<p> Temperature: ' + mainTemp + '°C</p>');
     $('#current-weather').append('<p> Humidity: ' + mainHumi + '%</p>');
@@ -94,7 +91,7 @@ function fiveDayForecast(newCity) {
   }).then(function(response) {
 
     for (var i = 0; i < 5; i++) {
-      $('article').append('<div id="blue-' + i + '" class="blueBox"> </div>')
+      $('article').append('<div id="blue-' + i + '" class="blueBox rounded"> </div>')
     }
 
     for (var i = 0; i < 5; i ++) {
