@@ -13,7 +13,7 @@ $('aside').append('<p>Search for a City</p>')
 $('aside').append('<div id="search-city" class="input-group mb-3"></div>')
 $('#search-city').append('<input type="text" class="form-control" aria-describedby="button-addon2">')
 $('#search-city').append('<div id="button" class="input-group-append"></div>')
-$('#button').append('<button class="btn btn-primary" type="button" id="button-addon2">Button</button>');
+$('#button').append('<button class="btn btn-primary" type="button" id="button-addon2"><i class="fa fa-search"></button>');
 $('aside').append('<div id="list" class="d-flex flex-column"> </div>')
   for (var i = 0; i < yorkRegion.length; i++) {
     $('#list').append('<button class="btn btn-light border border-secondary" value="' + yorkRegion[i] + '">' + yorkRegion[i] + '</button>');
