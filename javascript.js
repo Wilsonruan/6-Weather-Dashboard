@@ -7,6 +7,7 @@ if (yorkRegion === null) {
 
 myFunction()
 currentConditions(yorkRegion[0]);
+geolocation()
 
 function myFunction() {
 $('aside').append('<p>Search for a City</p>')
@@ -89,7 +90,6 @@ function fiveDayForecast(newCity) {
       $('#blue-' + i).append('<p>Humidity: ' + response['list'][i * 8]['main']['humidity'] + '%</p>')
     }
   });
-  geolocation()
 }
 
 function searchHistory (newCity) {
