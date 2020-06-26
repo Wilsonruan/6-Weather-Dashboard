@@ -43,15 +43,24 @@ $.ajax({
     var mainTemp = response['main']['temp'];
     var mainHumi = response['main']['humidity'];
     var weatherIcon = response['weather'][0]['icon'];
+    weatherIcon = "http://openweathermap.org/img/w/" + weatherIcon + ".png"
     var windSpeed = response['wind']['speed'];
     var longAtt = response['coord']['lon'];
     var latAtt = response['coord']['lat'];
-    
-    $('#current-weather').append('<h1 id="icon-here">' + newCity + " (" + (moment().format('MMMM Do, YYYY')) + ')</h1>');
-    $('#icon-here').append('<img src="http://openweathermap.org/img/w/' + weatherIcon + '.png" alt="weather icon">');
-    $('#current-weather').append('<p> Temperature: ' + mainTemp + '°C</p>');
-    $('#current-weather').append('<p> Humidity: ' + mainHumi + '%</p>');
-    $('#current-weather').append('<p> Wind Speed: ' + windSpeed + ' MPH</p>');
+
+    var mainCity = $('<h1>').attr('id','icon-here').text(newCity + " (" + (moment().format('MMMM Do, YYYY')) + ")")
+    weatherIcon = $('<img>').attr('src', weatherIcon).attr('alt','weather icon')
+    mainTemp = $('<p>').text('Temperature: ' + mainTemp + '°C')
+    mainHumi = $('<p>').text('Humidity: ' + mainHumi + '%')
+    windSpeed = $('<p>').text('Wind Speed: ' + windSpeed + ' MPH')
+
+    $('#current-weather').append(mainCity, mainTemp, mainHumi, windSpeed);
+    $('#icon-here').append(weatherIcon);
+    // $('#current-weather').append('<h1 id="icon-here">' + newCity + " (" + (moment().format('MMMM Do, YYYY')) + ')</h1>');
+    // $('#icon-here').append('<img src="http://openweathermap.org/img/w/' + weatherIcon + '.png" alt="weather icon">');
+    // $('#current-weather').append('<p> Temperature: ' + mainTemp + '°C</p>');
+    // $('#current-weather').append('<p> Humidity: ' + mainHumi + '%</p>');
+    // $('#current-weather').append('<p> Wind Speed: ' + windSpeed + ' MPH</p>');
 
     uvIndex(longAtt, latAtt)
 
@@ -79,15 +88,28 @@ function fiveDayForecast(newCity) {
   }).then(function(response) {
 
     for (var i = 0; i < 5; i++) {
-      $('article').append('<div id="blue-' + i + '" class="blueBox rounded"> </div>')
+      var blueCubes = $('<div>').attr('id','blue-' + i).addClass('blueBox rounded');
+      $('article').append(blueCubes);
+      // $('article').append('<div id="blue-' + i + '" class="blueBox rounded"> </div>')
     }
 
     for (var i = 0; i < 5; i ++) {
       var weatherIcon = response['list'][i * 8]['weather'][0]['icon'];
-      $('#blue-' + i).append('<p>' + (moment().add( i + 1, 'days').format('MMMM Do, YYYY')) + '</p>')
-      $('#blue-' + i).append('<img src="http://openweathermap.org/img/w/' + weatherIcon + '.png" alt="weather icon">');
-      $('#blue-' + i).append('<p>Temp: ' + response['list'][i * 8]['main']['temp'] + '°C</p>')
-      $('#blue-' + i).append('<p>Humidity: ' + response['list'][i * 8]['main']['humidity'] + '%</p>')
+      weatherIcon = "http://openweathermap.org/img/w/" + weatherIcon + ".png";
+      var tempForcast = response['list'][i * 8]['main']['temp'];
+      var humidityForcast = response['list'][i * 8]['main']['humidity'];
+
+      var datesForcast = $('<p>').text(moment().add( i + 1, 'days').format('MMMM Do, YYYY'))
+      weatherIcon = $('<img>').attr('src', weatherIcon).attr('alt', 'weather icon')
+      tempForcast = $('<p>').text('Temp: ' + tempForcast + '°C')
+      humidityForcast = $('<p>').text('Humidity: ' + humidityForcast + '%')
+
+      $('#blue-' + i).append(datesForcast, weatherIcon, tempForcast, humidityForcast);
+
+      // $('#blue-' + i).append('<p>' + (moment().add( i + 1, 'days').format('MMMM Do, YYYY')) + '</p>')
+      // $('#blue-' + i).append('<img src="http://openweathermap.org/img/w/' + weatherIcon + '.png" alt="weather icon">');
+      // $('#blue-' + i).append('<p>Temp: ' + response['list'][i * 8]['main']['temp'] + '°C</p>')
+      // $('#blue-' + i).append('<p>Humidity: ' + response['list'][i * 8]['main']['humidity'] + '%</p>')
     }
   });
 }
@@ -104,9 +126,9 @@ function searchHistory (newCity) {
   if (firstTime) {
     yorkRegion.unshift(newCity);
     yorkRegion.pop();
-    var JSONReadyUsers = JSON.stringify(yorkRegion);
-    localStorage.setItem("yorkRegion", JSONReadyUsers);
   }
+  var JSONReadyUsers = JSON.stringify(yorkRegion);
+  localStorage.setItem("yorkRegion", JSONReadyUsers);
   firstTime = true;
   $('aside, #current-weather, #forecast').empty()
 }
@@ -124,7 +146,8 @@ function geolocation () {
     console.log('Your current position is:');
     console.log(`Latitude : ${crd.latitude}`);
     console.log(`Longitude: ${crd.longitude}`);
-    console.log(`More or less ${crd.accuracy} meters.`);
+    var yourLocation = "http://api.openweathermap.org/data/2.5/weather?lat=" + crd.latitude + "&lon=" + crd.longitude + "&appid=02c767f928e7e5ad4f0e01b6982bd3e6"
+    console.log(yourLocation)
   }
   
   function error(err) {
