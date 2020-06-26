@@ -56,11 +56,6 @@ $.ajax({
 
     $('#current-weather').append(mainCity, mainTemp, mainHumi, windSpeed);
     $('#icon-here').append(weatherIcon);
-    // $('#current-weather').append('<h1 id="icon-here">' + newCity + " (" + (moment().format('MMMM Do, YYYY')) + ')</h1>');
-    // $('#icon-here').append('<img src="http://openweathermap.org/img/w/' + weatherIcon + '.png" alt="weather icon">');
-    // $('#current-weather').append('<p> Temperature: ' + mainTemp + '°C</p>');
-    // $('#current-weather').append('<p> Humidity: ' + mainHumi + '%</p>');
-    // $('#current-weather').append('<p> Wind Speed: ' + windSpeed + ' MPH</p>');
 
     uvIndex(longAtt, latAtt)
 
@@ -90,7 +85,6 @@ function fiveDayForecast(newCity) {
     for (var i = 0; i < 5; i++) {
       var blueCubes = $('<div>').attr('id','blue-' + i).addClass('blueBox rounded');
       $('article').append(blueCubes);
-      // $('article').append('<div id="blue-' + i + '" class="blueBox rounded"> </div>')
     }
 
     for (var i = 0; i < 5; i ++) {
@@ -105,11 +99,6 @@ function fiveDayForecast(newCity) {
       humidityForcast = $('<p>').text('Humidity: ' + humidityForcast + '%')
 
       $('#blue-' + i).append(datesForcast, weatherIcon, tempForcast, humidityForcast);
-
-      // $('#blue-' + i).append('<p>' + (moment().add( i + 1, 'days').format('MMMM Do, YYYY')) + '</p>')
-      // $('#blue-' + i).append('<img src="http://openweathermap.org/img/w/' + weatherIcon + '.png" alt="weather icon">');
-      // $('#blue-' + i).append('<p>Temp: ' + response['list'][i * 8]['main']['temp'] + '°C</p>')
-      // $('#blue-' + i).append('<p>Humidity: ' + response['list'][i * 8]['main']['humidity'] + '%</p>')
     }
   });
 }
@@ -122,7 +111,6 @@ function searchHistory (newCity) {
       firstTime = false;
     }
   }
-
   if (firstTime) {
     yorkRegion.unshift(newCity);
     yorkRegion.pop();
@@ -147,7 +135,13 @@ function geolocation () {
     console.log(`Latitude : ${crd.latitude}`);
     console.log(`Longitude: ${crd.longitude}`);
     var yourLocation = "http://api.openweathermap.org/data/2.5/weather?lat=" + crd.latitude + "&lon=" + crd.longitude + "&appid=02c767f928e7e5ad4f0e01b6982bd3e6"
-    console.log(yourLocation)
+    $.ajax({
+      url: yourLocation,
+      method: "GET"
+    }).then(function(response) {
+      console.log(response['name'])
+    })
+
   }
   
   function error(err) {
