@@ -130,22 +130,18 @@ function geolocation () {
   
   function success(pos) {
     var crd = pos.coords;
-  
-    console.log('Your current position is:');
-    console.log(`Latitude : ${crd.latitude}`);
-    console.log(`Longitude: ${crd.longitude}`);
     var yourLocation = "http://api.openweathermap.org/data/2.5/weather?lat=" + crd.latitude + "&lon=" + crd.longitude + "&appid=02c767f928e7e5ad4f0e01b6982bd3e6"
     $.ajax({
       url: yourLocation,
       method: "GET"
     }).then(function(response) {
-      console.log(response['name'])
+      $('strong').text(response['name'])
+
     })
 
   }
-  
   function error(err) {
-    console.warn(`ERROR(${err.code}): ${err.message}`);
+    $('strong').text('Not Available')
   }
   
   navigator.geolocation.getCurrentPosition(success, error, options);
