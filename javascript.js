@@ -82,12 +82,10 @@ function fiveDayForecast(newCity) {
     method: "GET"
   }).then(function(response) {
 
-    for (var i = 0; i < 5; i++) {
+    for (var i = 0; i < 5; i ++) {
       var blueCubes = $('<div>').attr('id','blue-' + i).addClass('blueBox rounded');
       $('article').append(blueCubes);
-    }
 
-    for (var i = 0; i < 5; i ++) {
       var weatherIcon = response['list'][i * 8]['weather'][0]['icon'];
       weatherIcon = "http://openweathermap.org/img/w/" + weatherIcon + ".png";
       var tempForcast = response['list'][i * 8]['main']['temp'];
