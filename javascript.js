@@ -97,7 +97,7 @@ function fiveDayForecast(newCity) {
 
       var datesForcast = $('<p>').text(moment().add( i + 1, 'days').format('MMMM Do, YYYY'))
       // weatherIcon = $('<img>').attr('src', weatherIcon).attr('alt', 'weather icon')
-      weatherIcon = $('<img>').attr('src', weatherIcon, 'alt', 'weather icon')
+      weatherIcon = $('<img>').attr({src: weatherIcon, alt: 'weather icon'})
       tempForcast = $('<p>').text('Temp: ' + tempForcast + '°C')
       humidityForcast = $('<p>').text('Humidity: ' + humidityForcast + '%')
 
