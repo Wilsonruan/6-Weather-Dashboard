@@ -64,7 +64,7 @@ function currentConditions(newCity) {
 }
 
 function uvIndex(longAtt, latAtt) {
-  var UVURLWeather = "http://api.openweathermap.org/data/2.5/uvi?&lat=" + latAtt + "&lon=" + longAtt + '&appid=02c767f928e7e5ad4f0e01b6982bd3e6'
+  var UVURLWeather = "https://api.openweathermap.org/data/2.5/uvi?&lat=" + latAtt + "&lon=" + longAtt + '&appid=02c767f928e7e5ad4f0e01b6982bd3e6'
 
   $.ajax({
     url: UVURLWeather,
@@ -96,7 +96,6 @@ function fiveDayForecast(newCity) {
       var humidityForcast = response['list'][i * 8]['main']['humidity'];
 
       var datesForcast = $('<p>').text(moment().add(i + 1, 'days').format('MMMM Do, YYYY'))
-      // weatherIcon = $('<img>').attr('src', weatherIcon).attr('alt', 'weather icon')
       weatherIcon = $('<img>').attr({ src: weatherIcon, alt: 'weather icon' })
       tempForcast = $('<p>').text('Temp: ' + tempForcast + '°C')
       humidityForcast = $('<p>').text('Humidity: ' + humidityForcast + '%')
@@ -133,7 +132,7 @@ function geolocation() {
 
   function success(pos) {
     var crd = pos.coords;
-    var yourLocation = "http://api.openweathermap.org/data/2.5/weather?lat=" + crd.latitude + "&lon=" + crd.longitude + "&appid=02c767f928e7e5ad4f0e01b6982bd3e6"
+    var yourLocation = "https://api.openweathermap.org/data/2.5/weather?lat=" + crd.latitude + "&lon=" + crd.longitude + "&appid=02c767f928e7e5ad4f0e01b6982bd3e6"
     $.ajax({
       url: yourLocation,
       method: "GET"
