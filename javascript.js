@@ -64,7 +64,7 @@ function currentConditions(newCity) {
 }
 
 function uvIndex(longAtt, latAtt) {
-  var UVURLWeather = "http://api.openweathermap.org/data/2.5/uvi?appid=02c767f928e7e5ad4f0e01b6982bd3e6&lat=" + latAtt + "&lon=" + longAtt
+  var UVURLWeather = "http://api.openweathermap.org/data/2.5/uvi?&lat=" + latAtt + "&lon=" + longAtt + '&appid=02c767f928e7e5ad4f0e01b6982bd3e6'
 
   $.ajax({
     url: UVURLWeather,
@@ -75,7 +75,6 @@ function uvIndex(longAtt, latAtt) {
     $(uvIndextext).append("<mark>")
     $(uvIndextext.children('mark')).text(uvIndex)
     $('#current-weather').append(uvIndextext);
-    // $('#current-weather').append('<p> UV Index: <mark>' + uvIndex + '</mark></p>');
   })
 }
 
