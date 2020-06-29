@@ -16,9 +16,6 @@ function myFunction() {
   $('#search-city').append('<div id="button" class="input-group-append"></div>')
   $('#button').append('<button class="btn btn-primary" type="button" id="button-addon2"><i class="fa fa-search"></button>');
   $('aside').append('<div id="list" class="d-flex flex-column"> </div>')
-  // for (var i = 0; i < yorkRegion.length; i++) {
-  //   $('#list').append('<button class="btn btn-light border border-secondary" value="' + yorkRegion[i] + '">' + yorkRegion[i] + '</button>');
-  // }
   yorkRegion.forEach(element => {
     $('#list').append('<button class="btn btn-light border border-secondary" value="' + element + '">' + element + '</button>');
   });
@@ -74,7 +71,11 @@ function uvIndex(longAtt, latAtt) {
     method: "GET"
   }).then(function (getUV) {
     var uvIndex = getUV['value']
-    $('#current-weather').append('<p> UV Index: <mark>' + uvIndex + '</mark></p>');
+    var uvIndextext = $('<p>').text('UV Index: ')
+    $(uvIndextext).append("<mark>")
+    $(uvIndextext.children('mark')).text(uvIndex)
+    $('#current-weather').append(uvIndextext);
+    // $('#current-weather').append('<p> UV Index: <mark>' + uvIndex + '</mark></p>');
   })
 }
 
