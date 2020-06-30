@@ -16,6 +16,8 @@ After each search there is a history list below the search bar.  Users can click
 
 This application uses API from openweather.  It can search by city name or in the history list.  The search ignores all caps and spaces between easy for everyone.  If users enter an invalid name.  An alert will appear until a correct name is entered.   If the users click on the history, that city will go to the top of the list.  If the users enter a new search the last city on the list will be gone. 
 
+![](./assets/images/Weather-Dashboard.JPG)
+
 # The URL of the deployed application
 
 https://wilsonruan.github.io/6-Weather-Dashboard/
