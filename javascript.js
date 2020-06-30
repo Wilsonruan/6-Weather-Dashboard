@@ -10,12 +10,20 @@ currentConditions(yorkRegion[0]);
 geolocation()
 
 function myFunction() {
-  $('aside').append('<p>Search for a City</p>')
-  $('aside').append('<div id="search-city" class="input-group mb-3"></div>')
-  $('#search-city').append('<input type="text" class="form-control" aria-describedby="button-addon2">')
-  $('#search-city').append('<div id="button" class="input-group-append"></div>')
-  $('#button').append('<button class="btn btn-primary" type="button" id="button-addon2"><i class="fa fa-search"></button>');
-  $('aside').append('<div id="list" class="d-flex flex-column"> </div>')
+  var searchBar = $("<p>").text('Search for a City')
+  var idInput = $('<div>').attr( "id", "search-city").addClass('input-group mb-3')
+  var inputCity = $('<input>').attr('type', 'text').addClass('form-control');
+  var divButton = $('<div>').attr('id','button').addClass('input-group-append')
+  var buttonCity = $('<button>').attr('type', 'button').addClass('btn btn-primary')
+  $(buttonCity).append('<i>')
+  $(buttonCity.children()).addClass('fa fa-search')
+  var divList = $('<div>').attr('id', 'list').addClass('d-flex flex-column')
+
+  $('aside').append(searchBar, idInput, divList);
+  $('#search-city').append(inputCity, divButton)
+  $('#button').append(buttonCity)
+  
+
   yorkRegion.forEach(element => {
     $('#list').append('<button class="btn btn-light border border-secondary" value="' + element + '">' + element + '</button>');
   });
