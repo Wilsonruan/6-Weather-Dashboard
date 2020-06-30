@@ -22,7 +22,6 @@ function myFunction() {
   $('aside').append(searchBar, idInput, divList);
   $('#search-city').append(inputCity, divButton)
   $('#button').append(buttonCity)
-  
 
   yorkRegion.forEach(element => {
     $('#list').append('<button class="btn btn-light border border-secondary" value="' + element + '">' + element + '</button>');
@@ -140,7 +139,9 @@ function geolocation() {
 
   function success(pos) {
     var crd = pos.coords;
-    var yourLocation = "https://api.openweathermap.org/data/2.5/weather?lat=" + crd.latitude + "&lon=" + crd.longitude + "&appid=02c767f928e7e5ad4f0e01b6982bd3e6"
+    var longAtt = crd.longitude.toFixed(3).replace(/\.(\d\d)\d?$/, '.$1')
+    var latAtt = crd.latitude.toFixed(3).replace(/\.(\d\d)\d?$/, '.$1')
+    var yourLocation = "https://api.openweathermap.org/data/2.5/weather?lat=" + latAtt + "&lon=" + longAtt + "&appid=02c767f928e7e5ad4f0e01b6982bd3e6"
     $.ajax({
       url: yourLocation,
       method: "GET"
